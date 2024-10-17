@@ -1,0 +1,28 @@
+using UnityEngine;
+
+public class Evade_SMB : StateMachineBehaviour
+{
+	private bool isCompletelyFinished;
+	private Player player;
+	public override void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
+	{
+		if (player == null)
+			player = animator.GetComponent<Player>();
+		isCompletelyFinished = false;
+	}
+	public override void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
+	{
+		if (isCompletelyFinished == false && stateInfo.normalizedTime > 0.7f)
+		{
+			player.ResetToIdle();
+			isCompletelyFinished = true;
+		}
+	}
+	public override void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
+	{
+		if (isCompletelyFinished == false)
+		{
+			player.ResetToIdle();
+		}
+	}
+}
